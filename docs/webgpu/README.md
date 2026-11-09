@@ -30,11 +30,12 @@ topology and learned per-face sigma and overlap parameters. Positions and RGB
 colors are precomputed per pose. Lighting is baked into the colors; it is not
 recomputed as the view rotates. No arbitrary-pose inference runs in the browser.
 
-Subjects 00016 and 00036 use their completed `bvh` experiment checkpoints;
-00019 and 00028 use their completed `paper_release_dssim06_legacy` full-model
-checkpoints. These are different training configurations, not a claim about the
-current Release's default recipe. Each subject's `metadata.json` records its
-checkpoint and configuration SHA-256.
+All four subjects use their completed `full_paper_20261109_v1` Full, seed 42
+checkpoints (10,000 training exposures). The selected model uses the new
+Lambert and self-occlusion appearance path, with lighting baked into the
+per-pose colors exported to the viewer. Each subject's `metadata.json` records
+its checkpoint and configuration SHA-256. The 70 preview frames and the 24
+mesh frames were generated from the same checkpoint for each subject.
 
 The WebGPU renderer implements the **single-center-sample OFF** forward path,
 including triangle expansion, soft coverage and depth-ordered alpha blending.
@@ -42,8 +43,8 @@ The Release's adaptive `balanced` 1/4/16 sampling path, backward pass, and
 avatar model inference are not implemented here. The rendering input uses the
 checkpoint's per-face parameters and degree-0 SH colors evaluated as RGB.
 
-For 00016, three poses and one rotated pose at 400×600 were checked against the
-corresponding CUDA OFF forward output. The largest 8-bit channel difference was
-2. These checks cover those four inputs only; they are not a general numerical
-equivalence claim for all subjects and views.
+The viewer uses a forward-only, single-sample OFF rendering path; the Full
+models were trained and evaluated with balanced sampling. Browser checks are
+limited to the explicitly tested poses and views and are not a claim of general
+numerical equivalence for every input.
 `renderer/` retains upstream copyright notices and license files.

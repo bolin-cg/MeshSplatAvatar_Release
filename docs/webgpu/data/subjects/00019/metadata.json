@@ -1,0 +1,461 @@
+{
+  "vertex_count": 72852,
+  "face_count": 145692,
+  "frame_rate": 8,
+  "faces": "sequence/faces.bin",
+  "weights": "sequence/weights.bin",
+  "sigmas": "sequence/sigma.bin",
+  "overlaps": "sequence/overlap.bin",
+  "camera": {
+    "width": 400,
+    "height": 600,
+    "original_width": 800,
+    "original_height": 1200,
+    "view_matrix": [
+      0.9998741149902344,
+      -0.0026716578286141157,
+      0.0156394075602293,
+      0.0,
+      0.0,
+      -0.9857206344604492,
+      -0.16838926076889038,
+      0.0,
+      0.015865962952375412,
+      0.16836807131767273,
+      -0.9855965375900269,
+      0.0,
+      -0.09286443144083023,
+      1.3492125272750854,
+      6.155019760131836,
+      1.0
+    ],
+    "projection_matrix": [
+      5.597391128540039,
+      -0.00995772983878851,
+      0.01563940942287445,
+      0.0156394075602293,
+      -0.0002104865707224235,
+      -3.6789000034332275,
+      -0.16838927567005157,
+      -0.16838926076889038,
+      0.08758687227964401,
+      0.6275368332862854,
+      -0.9855966567993164,
+      -0.9855965375900269,
+      -0.5121684074401855,
+      5.040459156036377,
+      6.15492057800293,
+      6.155019760131836
+    ],
+    "tanfovx": 0.1786327949540818,
+    "tanfovy": 0.2679491924311227,
+    "center": [
+      0.0001965317060239613,
+      2.3663856983184814,
+      5.840674877166748
+    ],
+    "matrix_convention": "column-major, full world-to-clip projection; source row-vector transposed tensor flattened in row order",
+    "pixel_origin": "top-left"
+  },
+  "frames": [
+    {
+      "id": "Take6/000001",
+      "original_test_index": 0,
+      "positions": "sequence/000000.positions.bin",
+      "colors": "sequence/000000.colors.bin",
+      "bounds_min": [
+        -0.24241244792938232,
+        0.26870375871658325,
+        -0.380870521068573
+      ],
+      "bounds_max": [
+        0.3959510326385498,
+        1.9827309846878052,
+        0.08602698892354965
+      ]
+    },
+    {
+      "id": "Take6/000004",
+      "original_test_index": 3,
+      "positions": "sequence/000001.positions.bin",
+      "colors": "sequence/000001.colors.bin",
+      "bounds_min": [
+        -0.23508045077323914,
+        0.26767808198928833,
+        -0.38061875104904175
+      ],
+      "bounds_max": [
+        0.4050156772136688,
+        1.983962059020996,
+        0.08443260937929153
+      ]
+    },
+    {
+      "id": "Take6/000007",
+      "original_test_index": 6,
+      "positions": "sequence/000002.positions.bin",
+      "colors": "sequence/000002.colors.bin",
+      "bounds_min": [
+        -0.22072598338127136,
+        0.2727239727973938,
+        -0.38036590814590454
+      ],
+      "bounds_max": [
+        0.4088892340660095,
+        1.9841432571411133,
+        0.08869648724794388
+      ]
+    },
+    {
+      "id": "Take6/000010",
+      "original_test_index": 9,
+      "positions": "sequence/000003.positions.bin",
+      "colors": "sequence/000003.colors.bin",
+      "bounds_min": [
+        -0.21424433588981628,
+        0.2671770453453064,
+        -0.3796522617340088
+      ],
+      "bounds_max": [
+        0.37995240092277527,
+        1.9816570281982422,
+        0.11210514605045319
+      ]
+    },
+    {
+      "id": "Take6/000013",
+      "original_test_index": 12,
+      "positions": "sequence/000004.positions.bin",
+      "colors": "sequence/000004.colors.bin",
+      "bounds_min": [
+        -0.2130892127752304,
+        0.2675028443336487,
+        -0.38051992654800415
+      ],
+      "bounds_max": [
+        0.3662918210029602,
+        1.9831122159957886,
+        0.2682034969329834
+      ]
+    },
+    {
+      "id": "Take6/000016",
+      "original_test_index": 15,
+      "positions": "sequence/000005.positions.bin",
+      "colors": "sequence/000005.colors.bin",
+      "bounds_min": [
+        -0.2938983142375946,
+        0.2681024372577667,
+        -0.4231932759284973
+      ],
+      "bounds_max": [
+        0.3717287480831146,
+        1.9842243194580078,
+        0.44410237669944763
+      ]
+    },
+    {
+      "id": "Take6/000019",
+      "original_test_index": 18,
+      "positions": "sequence/000006.positions.bin",
+      "colors": "sequence/000006.colors.bin",
+      "bounds_min": [
+        -0.3856251537799835,
+        0.2678591310977936,
+        -0.46490830183029175
+      ],
+      "bounds_max": [
+        0.36566847562789917,
+        1.9837030172348022,
+        0.4594671130180359
+      ]
+    },
+    {
+      "id": "Take6/000022",
+      "original_test_index": 21,
+      "positions": "sequence/000007.positions.bin",
+      "colors": "sequence/000007.colors.bin",
+      "bounds_min": [
+        -0.39945897459983826,
+        0.2671906352043152,
+        -0.4753953218460083
+      ],
+      "bounds_max": [
+        0.3476260304450989,
+        1.9847018718719482,
+        0.4305512011051178
+      ]
+    },
+    {
+      "id": "Take6/000025",
+      "original_test_index": 24,
+      "positions": "sequence/000008.positions.bin",
+      "colors": "sequence/000008.colors.bin",
+      "bounds_min": [
+        -0.3550248444080353,
+        0.27314236760139465,
+        -0.43489909172058105
+      ],
+      "bounds_max": [
+        0.35399526357650757,
+        1.97866690158844,
+        0.40219634771347046
+      ]
+    },
+    {
+      "id": "Take6/000028",
+      "original_test_index": 27,
+      "positions": "sequence/000009.positions.bin",
+      "colors": "sequence/000009.colors.bin",
+      "bounds_min": [
+        -0.248846173286438,
+        0.27341359853744507,
+        -0.4304523169994354
+      ],
+      "bounds_max": [
+        0.33048301935195923,
+        1.9732210636138916,
+        0.3993558883666992
+      ]
+    },
+    {
+      "id": "Take6/000031",
+      "original_test_index": 30,
+      "positions": "sequence/000010.positions.bin",
+      "colors": "sequence/000010.colors.bin",
+      "bounds_min": [
+        -0.24333776533603668,
+        0.2721315324306488,
+        -0.4326905310153961
+      ],
+      "bounds_max": [
+        0.32708290219306946,
+        1.9646166563034058,
+        0.4194934666156769
+      ]
+    },
+    {
+      "id": "Take6/000034",
+      "original_test_index": 33,
+      "positions": "sequence/000011.positions.bin",
+      "colors": "sequence/000011.colors.bin",
+      "bounds_min": [
+        -0.23842883110046387,
+        0.27257850766181946,
+        -0.43408203125
+      ],
+      "bounds_max": [
+        0.3339071273803711,
+        1.9475922584533691,
+        0.4574684202671051
+      ]
+    },
+    {
+      "id": "Take6/000037",
+      "original_test_index": 36,
+      "positions": "sequence/000012.positions.bin",
+      "colors": "sequence/000012.colors.bin",
+      "bounds_min": [
+        -0.2236729860305786,
+        0.2674140930175781,
+        -0.4350026249885559
+      ],
+      "bounds_max": [
+        0.336917906999588,
+        1.9390150308609009,
+        0.5220521092414856
+      ]
+    },
+    {
+      "id": "Take6/000040",
+      "original_test_index": 39,
+      "positions": "sequence/000013.positions.bin",
+      "colors": "sequence/000013.colors.bin",
+      "bounds_min": [
+        -0.22198128700256348,
+        0.26414617896080017,
+        -0.42715904116630554
+      ],
+      "bounds_max": [
+        0.31981348991394043,
+        1.9333230257034302,
+        0.5850847959518433
+      ]
+    },
+    {
+      "id": "Take6/000043",
+      "original_test_index": 42,
+      "positions": "sequence/000014.positions.bin",
+      "colors": "sequence/000014.colors.bin",
+      "bounds_min": [
+        -0.2130243182182312,
+        0.2642550468444824,
+        -0.4133506119251251
+      ],
+      "bounds_max": [
+        0.29848724603652954,
+        1.9343063831329346,
+        0.6252040863037109
+      ]
+    },
+    {
+      "id": "Take6/000046",
+      "original_test_index": 45,
+      "positions": "sequence/000015.positions.bin",
+      "colors": "sequence/000015.colors.bin",
+      "bounds_min": [
+        -0.2301284670829773,
+        0.2628107964992523,
+        -0.43880918622016907
+      ],
+      "bounds_max": [
+        0.2974610924720764,
+        1.92741060256958,
+        0.6243756413459778
+      ]
+    },
+    {
+      "id": "Take6/000049",
+      "original_test_index": 48,
+      "positions": "sequence/000016.positions.bin",
+      "colors": "sequence/000016.colors.bin",
+      "bounds_min": [
+        -0.24996957182884216,
+        0.2628464698791504,
+        -0.42777472734451294
+      ],
+      "bounds_max": [
+        0.38272738456726074,
+        1.9235985279083252,
+        0.5885099172592163
+      ]
+    },
+    {
+      "id": "Take6/000052",
+      "original_test_index": 51,
+      "positions": "sequence/000017.positions.bin",
+      "colors": "sequence/000017.colors.bin",
+      "bounds_min": [
+        -0.28409576416015625,
+        0.2654707431793213,
+        -0.4017499089241028
+      ],
+      "bounds_max": [
+        0.439107209444046,
+        1.9280633926391602,
+        0.525856614112854
+      ]
+    },
+    {
+      "id": "Take6/000055",
+      "original_test_index": 54,
+      "positions": "sequence/000018.positions.bin",
+      "colors": "sequence/000018.colors.bin",
+      "bounds_min": [
+        -0.3331032693386078,
+        0.2669384777545929,
+        -0.41738346219062805
+      ],
+      "bounds_max": [
+        0.45648592710494995,
+        1.9393277168273926,
+        0.4318104088306427
+      ]
+    },
+    {
+      "id": "Take6/000058",
+      "original_test_index": 57,
+      "positions": "sequence/000019.positions.bin",
+      "colors": "sequence/000019.colors.bin",
+      "bounds_min": [
+        -0.3499854505062103,
+        0.26816585659980774,
+        -0.48870667815208435
+      ],
+      "bounds_max": [
+        0.4492897689342499,
+        1.9631314277648926,
+        0.31991782784461975
+      ]
+    },
+    {
+      "id": "Take6/000061",
+      "original_test_index": 60,
+      "positions": "sequence/000020.positions.bin",
+      "colors": "sequence/000020.colors.bin",
+      "bounds_min": [
+        -0.34904536604881287,
+        0.2701520621776581,
+        -0.576299250125885
+      ],
+      "bounds_max": [
+        0.4486807882785797,
+        1.9764094352722168,
+        0.20109058916568756
+      ]
+    },
+    {
+      "id": "Take6/000064",
+      "original_test_index": 63,
+      "positions": "sequence/000021.positions.bin",
+      "colors": "sequence/000021.colors.bin",
+      "bounds_min": [
+        -0.33785778284072876,
+        0.27142101526260376,
+        -0.6172440052032471
+      ],
+      "bounds_max": [
+        0.5192615389823914,
+        1.9734874963760376,
+        0.19672563672065735
+      ]
+    },
+    {
+      "id": "Take6/000067",
+      "original_test_index": 66,
+      "positions": "sequence/000022.positions.bin",
+      "colors": "sequence/000022.colors.bin",
+      "bounds_min": [
+        -0.3159204423427582,
+        0.2718358039855957,
+        -0.648786187171936
+      ],
+      "bounds_max": [
+        0.5700806379318237,
+        1.9709073305130005,
+        0.1894061416387558
+      ]
+    },
+    {
+      "id": "Take6/000070",
+      "original_test_index": 69,
+      "positions": "sequence/000023.positions.bin",
+      "colors": "sequence/000023.colors.bin",
+      "bounds_min": [
+        -0.30446040630340576,
+        0.2699965536594391,
+        -0.670402467250824
+      ],
+      "bounds_max": [
+        0.5754854083061218,
+        1.9904890060424805,
+        0.1433659940958023
+      ]
+    }
+  ],
+  "checkpoint_sha256": "6576deb35ec459de7fdefacf0ddf11e930ce117bb36b758007eefc8fa839df4c",
+  "config_sha256": "c282dd582c2b74faf944a2026bbd2c5635ebfccb5a537948632a48030c1f875e",
+  "source_model": "xhumans_00019_full",
+  "sampling": "off",
+  "byte_order": "little endian",
+  "colors": "SH degree 0 to RGB max(0, 0.28209479177387814*SH + 0.5), pose-dependent lighting baked; not relit on camera changes",
+  "units": "dataset SMPL-X coordinate units; not independently calibrated here",
+  "sequence_stride": 3,
+  "source_sequence": "X-Humans 00019 test, original test indices 0 through 69",
+  "preview": {
+    "path": "preview/",
+    "count": 70,
+    "fps": 24,
+    "format": "jpg"
+  }
+}

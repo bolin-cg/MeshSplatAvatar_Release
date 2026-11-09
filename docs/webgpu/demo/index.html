@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>MeshSplatAvatar interactive demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: #292929; font: 15px/1.5 Arial, Helvetica, sans-serif; }
+    main { width: min(1400px, 100%); margin: 0 auto; }
+    .carousel { overflow: hidden; }
+    .carousel-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px) minmax(0, 1fr); align-items: start; gap: 18px; transition: transform .2s ease, opacity .2s ease; }
+    .carousel-stage.leaving-left { transform: translateX(-12%); opacity: .3; }
+    .carousel-stage.leaving-right { transform: translateX(12%); opacity: .3; }
+    .center-card { min-width: 0; }
+    .side-card { display: block; width: 100%; min-width: 0; padding: 0; background: #fff; color: #555; border: 0; border-radius: 0; font: inherit; cursor: pointer; touch-action: pan-y; }
+    .side-preview { position: relative; display: block; width: 100%; aspect-ratio: 2 / 3; background: #fafafa; overflow: hidden; }
+    .side-preview img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; user-select: none; }
+    .side-status { position: absolute; inset: 0; display: grid; place-items: center; padding: 10px; color: #777; font-size: 12px; }
+    .side-status[hidden] { display: none; }
+    .side-label { display: block; margin: 8px 0 0; font-size: 13px; }
+    .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 0 0 12px; touch-action: pan-y; }
+    .carousel-nav button { min-width: 36px; padding: 5px 10px; }
+    .subject-title { min-width: 112px; text-align: center; }
+    @media (max-width: 650px) {
+      .carousel-stage { grid-template-columns: minmax(0, 16%) minmax(0, 1fr) minmax(0, 16%); gap: 6px; }
+      .side-card { padding-top: 0; }
+      .side-preview img { transform: scale(1.5); }
+      .side-label { font-size: 10px; overflow-wrap: anywhere; }
+      .side-status { padding: 2px; font-size: 10px; }
+      .hint { padding: 0 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .carousel-stage { transition: none; } }
+    .viewport { position: relative; width: min(100%, 440px); margin: 0 auto; overflow: hidden; background: #fff; cursor: grab; touch-action: none; }
+    canvas { display: block; width: 100%; height: auto; }
+    .viewport:active { cursor: grabbing; }
+    #cached-frame { position: absolute; inset: 0; pointer-events: none; cursor: inherit; }
+    #cached-frame[hidden] { display: none; }
+    .message { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; color: #555; text-align: center; background: #fff; }
+    .message[hidden] { display: none; }
+    .controls { display: flex; align-items: center; gap: 12px; width: min(100%, 440px); margin: 14px auto 0; padding: 0 4px; }
+    button { flex: none; padding: 8px 14px; color: #fff; background: #363636; border: 0; border-radius: 18px; font: inherit; font-size: 13px; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: default; }
+    button:focus-visible, input:focus-visible, canvas:focus-visible { outline: 3px solid #3273b5; outline-offset: 3px; }
+    input[type=range] { min-width: 0; width: 100%; accent-color: #555; }
+    .zoom-controls { justify-content: center; margin-top: 10px; }
+    .zoom-controls output { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }
+    .hint { margin: 10px 0 0; text-align: center; color: #666; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="carousel-nav" aria-label="Choose subject">
+      <button id="previous-subject" type="button" aria-label="Previous subject" disabled>‹</button>
+      <span id="subject-title" class="subject-title" aria-live="polite">Loading…</span>
+      <button id="next-subject" type="button" aria-label="Next subject" disabled>›</button>
+    </nav>
+    <div class="carousel" aria-label="Subject carousel">
+    <div class="carousel-stage">
+      <button class="side-card" id="previous-card" type="button" disabled>
+        <span class="side-preview"><img alt="" decoding="async" draggable="false"><span class="side-status">Loading preview…</span></span>
+        <span class="side-label"></span>
+      </button>
+      <div class="center-card">
+    <div class="viewport">
+      <canvas id="avatar" width="400" height="600" tabindex="0" aria-label="Interactive avatar. Drag or use the arrow keys to rotate the view. Shift-drag to pan. Scroll to move the camera toward or away from the pointer."></canvas>
+      <canvas id="cached-frame" width="400" height="600" hidden aria-hidden="true"></canvas>
+      <div class="message" id="message" role="status">Loading interactive demo…</div>
+    </div>
+    <div class="controls">
+      <button id="play" type="button" disabled>Pause</button>
+      <input id="timeline" type="range" min="0" max="0" value="0" aria-label="Animation frame" disabled>
+      <button id="reset" type="button" disabled>Reset view</button>
+    </div>
+    <div class="controls zoom-controls" aria-label="Zoom controls">
+      <button id="zoom-out" type="button" aria-label="Move camera farther" disabled>−</button>
+      <output id="zoom-level" aria-live="polite">100%</output>
+      <button id="zoom-in" type="button" aria-label="Move camera closer" disabled>+</button>
+    </div>
+      </div>
+      <button class="side-card" id="next-card" type="button" disabled>
+        <span class="side-preview"><img alt="" decoding="async" draggable="false"><span class="side-status">Loading preview…</span></span>
+        <span class="side-label"></span>
+      </button>
+    </div>
+    </div>
+  </main>
+  <script type="module" src="avatar.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MeshSplatAvatar reconstructs animatable mesh avatars from monocular video using differentiable triangle splatting.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MeshSplatAvatar: Animatable Mesh Avatars from Monocular Video via Differentiable Triangle Splatting">
+  <meta property="og:description" content="An explicit, animatable mesh avatar reconstructed from monocular video.">
+  <meta property="og:image" content="assets/social-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:,">
+  <title>MeshSplatAvatar: Animatable Mesh Avatars from Monocular Video</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #292929; background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; }
+    a { color: #3273b5; }
+    a:hover { color: #205583; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #3273b5; outline-offset: 3px; }
+    img { display: block; max-width: 100%; height: auto; }
+    .container { width: min(960px, calc(100% - 40px)); margin: 0 auto; }
+    .paper-header { padding: 60px 0 28px; text-align: center; }
+    h1 { max-width: 900px; margin: 0 auto 22px; color: #252525; font-size: clamp(30px, 4.2vw, 44px); font-weight: 600; line-height: 1.2; }
+    .authors { margin: 0 0 5px; color: #3273b5; font-size: 20px; }
+    .affiliation { margin: 0; font-size: 16px; }
+    .resources { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px; }
+    .resource { padding: 9px 17px; border: 0; border-radius: 22px; background: #363636; color: #fff; font: inherit; font-size: 14px; }
+    .resource[disabled] { opacity: .72; cursor: default; }
+    .teaser { padding: 10px 0 34px; }
+    .teaser-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: end; max-width: 760px; margin: 0 auto; }
+    .teaser figure { margin: 0; text-align: center; }
+    .teaser img { width: 100%; height: 300px; object-fit: contain; }
+    .hero-00036 { position: relative; height: 300px; overflow: hidden; }
+    .teaser .hero-00036 img { position: absolute; left: 50%; top: -54.05%; width: auto; max-width: none; height: 180.18%; transform: translateX(-50%); }
+    .teaser figcaption { margin-top: 8px; color: #666; font-size: 13px; }
+    .teaser-caption { max-width: 760px; margin: 18px auto 0; text-align: center; color: #555; font-size: 14px; }
+    .demo-container { width: min(1400px, calc(100% - 40px)); margin: 0 auto; }
+    .demo-frame { display: block; width: 100%; height: 880px; margin: 0 auto; border: 0; }
+    .demo-caption { max-width: 760px; margin: 10px auto 0; color: #555; font-size: 14px; text-align: center; }
+    section.content { padding: 45px 0; }
+    .shaded { background: #f5f5f5; }
+    h2 { margin: 0 0 22px; color: #292929; text-align: center; font-size: 30px; font-weight: 600; line-height: 1.2; }
+    h3 { margin: 38px 0 16px; text-align: center; font-size: 22px; font-weight: 600; }
+    p { margin: 0 0 16px; }
+    .abstract { max-width: 800px; margin: 0 auto; text-align: justify; }
+    .method-figure { max-width: 800px; margin: 0 auto; }
+    figure.result-figure { max-width: 900px; margin: 0 auto; }
+    figure img { margin: 0 auto; }
+    figure a { display: block; }
+    figure figcaption { margin-top: 14px; color: #555; font-size: 14px; line-height: 1.6; }
+    .figure-note { margin: 0 auto 18px; color: #666; font-size: 13px; text-align: center; }
+    .citation { max-width: 800px; margin: 0 auto; }
+    .citation h2 { text-align: left; }
+    pre { margin: 0; padding: 20px; overflow-x: auto; background: #f5f5f5; font-family: Consolas, Monaco, monospace; font-size: 13px; line-height: 1.7; }
+    .citation-note { margin-top: 10px; color: #666; font-size: 13px; }
+    footer { padding: 35px 20px; background: #f5f5f5; color: #666; text-align: center; font-size: 13px; }
+    footer p { margin: 0; }
+    @media (max-width: 600px) {
+      .container, .demo-container { width: calc(100% - 32px); }
+      .demo-frame { height: calc((100vw - 44px) * .68 * 1.5 + 275px); }
+      .paper-header { padding: 42px 0 22px; }
+      h1 { font-size: 29px; }
+      .authors { font-size: 18px; }
+      .affiliation { font-size: 14px; }
+      .teaser-gallery { gap: 5px; }
+      .teaser img { height: 190px; }
+      .hero-00036 { height: 190px; }
+      .teaser figcaption { font-size: 11px; }
+      section.content { padding: 36px 0; }
+      h2 { font-size: 26px; }
+      h3 { font-size: 20px; }
+      .abstract { text-align: left; }
+      pre { font-size: 11px; padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="paper-header">
+    <div class="container">
+      <h1>MeshSplatAvatar: Animatable Mesh Avatars from Monocular Video via Differentiable Triangle Splatting</h1>
+      <p class="authors">Bolin Zhang</p>
+      <p class="affiliation">Nanjing University of Posts and Telecommunications, China</p>
+      <div class="resources" aria-label="Project resources">
+        <button class="resource" type="button" disabled>Paper · Coming soon</button>
+        <button class="resource" type="button" disabled>Code · Coming soon</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container teaser">
+      <div class="teaser-gallery">
+        <figure>
+          <div class="hero-00036"><img src="assets/hero-00036.webp" width="800" height="1200" alt="Reconstructed X-Humans subject 00036 wearing a blue top and khaki trousers."></div>
+          <figcaption>X-Humans appearance</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/hero-motion.webp" width="319" height="604" alt="Reconstructed THuman4.0 avatar in a held-out camera view.">
+          <figcaption>THuman4.0 appearance</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/hero-normals.webp" width="440" height="1135" alt="Camera-space surface normals of a reconstructed X-Humans mesh.">
+          <figcaption>X-Humans surface normals</figcaption>
+        </figure>
+      </div>
+      <p class="teaser-caption">MeshSplatAvatar reconstructs an animatable mesh with appearance and geometry from monocular video. The examples above show different poses and views.</p>
+    </div>
+
+    <section class="content" id="demo">
+      <div class="demo-container">
+        <h2>Interactive Demo</h2>
+        <iframe class="demo-frame" src="webgpu/demo/index.html" title="Interactive animated mesh avatar" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <section class="content shaded" id="abstract">
+      <div class="container">
+        <h2>Abstract</h2>
+        <p class="abstract">Reconstructing animatable human meshes from monocular video requires both detailed appearance and accurate surface geometry. In mesh-guided Gaussian avatars, however, rendering contributions can extend beyond the underlying surface, so accurate image fitting does not necessarily imply accurate mesh geometry. We present MeshSplatAvatar, which makes the mesh itself the rendering primitive: it jointly fits geometry and appearance on one explicit, animatable whole-body mesh through differentiable triangle splatting. To reduce fitting errors caused by shared-edge coverage gaps and undersampling, we augment MeshSplatting with triangle expansion during rendering and adaptive subpixel sampling. Progressive adaptive mesh refinement increases local resolution to capture finer geometric detail while preserving mesh watertightness. Experiments on X-Humans and THuman4.0 show that our method achieves the best appearance reconstruction among the compared avatar methods on both datasets, and that its exported meshes reach a Chamfer distance of 4.94 mm on X-Humans, against 7.28 mm for the strongest compared avatar method. On X-Humans, fitting takes about 10.6 minutes on a single A100 GPU.</p>
+      </div>
+    </section>
+
+    <section class="content" id="method">
+      <div class="container">
+        <h2>Method</h2>
+        <figure class="method-figure">
+          <a href="assets/method.webp" target="_blank" rel="noopener" aria-label="Open the method overview at full size">
+            <img src="assets/method.webp" width="1800" height="1738" loading="lazy" alt="Method overview showing a canonical mesh, pose and expression deformation, triangle splatting, image supervision, and adaptive mesh refinement.">
+          </a>
+          <figcaption>Overview of MeshSplatAvatar. Triangle expansion is applied during rendering; the exported mesh retains its unexpanded surface. Click the image to view it at full size.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="content shaded" id="results">
+      <div class="container">
+        <h2>Results</h2>
+        <p class="figure-note">Click an image to view it at full size.</p>
+        <h3>Appearance on X-Humans</h3>
+        <figure class="result-figure">
+          <a href="assets/appearance-xhumans.webp" target="_blank" rel="noopener" aria-label="Open the X-Humans appearance comparison at full size">
+            <img src="assets/appearance-xhumans.webp" width="2200" height="1685" loading="lazy" alt="X-Humans appearance comparison with ground truth and other methods, including enlarged clothing details.">
+          </a>
+          <figcaption>Qualitative appearance comparison on X-Humans, including close-ups of pocket stitching and waistband lettering.</figcaption>
+        </figure>
+        <h3>Appearance on THuman4.0</h3>
+        <figure class="result-figure">
+          <a href="assets/appearance-thuman.webp" target="_blank" rel="noopener" aria-label="Open the THuman4.0 appearance comparison at full size">
+            <img src="assets/appearance-thuman.webp" width="2200" height="2470" loading="lazy" alt="THuman4.0 appearance comparison from near-frontal and side views of the same pose, with ground truth and other methods.">
+          </a>
+          <figcaption>Qualitative appearance comparison on THuman4.0, shown from two held-out cameras.</figcaption>
+        </figure>
+        <h3>Geometry on X-Humans</h3>
+        <figure class="result-figure">
+          <a href="assets/geometry.webp" target="_blank" rel="noopener" aria-label="Open the X-Humans geometry comparison at full size">
+            <img src="assets/geometry.webp" width="2200" height="2407" loading="lazy" alt="X-Humans geometry comparison showing camera-space normals and vertex-to-ground-truth-surface error maps.">
+          </a>
+          <figcaption>Qualitative geometry comparison on X-Humans. Error maps encode predicted-vertex-to-ground-truth-surface distances, capped at 30 mm; ground-truth and detail views show camera-space normals.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="content" id="citation">
+      <div class="container citation">
+        <h2>BibTeX</h2>
+        <pre><code>@misc{zhang2026meshsplatavatar,
+  title  = {MeshSplatAvatar: Animatable Mesh Avatars from Monocular
+            Video via Differentiable Triangle Splatting},
+  author = {Zhang, Bolin},
+  year   = {2026}
+}</code></pre>
+        <p class="citation-note">Publication details will be added when available.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Page layout inspired by <a href="https://nerfies.github.io/">Nerfies</a>.</p>
+  </footer>
+</body>
+</html>

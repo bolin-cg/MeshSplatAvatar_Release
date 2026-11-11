@@ -46,6 +46,8 @@
     input[type=range] { min-width: 0; width: 100%; accent-color: #555; }
     .zoom-controls { justify-content: center; margin-top: 10px; }
     .zoom-controls output { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }
+    .sampling-control { justify-content: center; margin-top: 10px; font-size: 13px; }
+    .sampling-control label { cursor: pointer; }
     .hint { margin: 10px 0 0; text-align: center; color: #666; font-size: 12px; }
   </style>
 </head>
@@ -77,6 +79,10 @@
       <button id="zoom-out" type="button" aria-label="Move camera farther" disabled>−</button>
       <output id="zoom-level" aria-live="polite">100%</output>
       <button id="zoom-in" type="button" aria-label="Move camera closer" disabled>+</button>
+    </div>
+    <div class="controls sampling-control">
+      <label title="Switching pauses playback for comparison."><input id="adaptive-sampling" type="checkbox" checked disabled> Adaptive sampling</label>
+      <label title="Use sigma 0.001 and overlap 0 for every face."><input id="sharp" type="checkbox" disabled> Sharp</label>
     </div>
       </div>
       <button class="side-card" id="next-card" type="button" disabled>

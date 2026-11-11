@@ -12,8 +12,15 @@ const message = document.getElementById('message');
 const play = document.getElementById('play');
 const timeline = document.getElementById('timeline');
 const reset = document.getElementById('reset');
+const adaptiveSampling = document.getElementById('adaptive-sampling');
+const sharp = document.getElementById('sharp');
 let dataRoot = new URL('../data/', import.meta.url);
-const state = { yaw: 0, pitch: 0, zoom: 1, panX: 0, panY: 0, index: 0, playing: true, dirty: true, busy: false, lastFrame: 0, pointer: null, failed: false };
+let savedSampling = null;
+try { savedSampling = sessionStorage.getItem('avatar-sampling'); } catch {}
+const state = { yaw: 0, pitch: 0, zoom: 1, panX: 0, panY: 0, index: 0, playing: true, dirty: true, busy: false, lastFrame: 0, pointer: null, failed: false, sampling: savedSampling === 'single' ? 'single' : 'adaptive', compareSampling: false };
+try { state.sharp = sessionStorage.getItem('avatar-sharp') === 'true'; } catch { state.sharp = false; }
+sharp.checked = state.sharp;
+adaptiveSampling.checked = state.sampling === 'adaptive';
 let metadata, renderer, faces, weights, sigmas, overlaps, center, rightAxis, upAxis;
 const frames = new Map();
 let preview = null;
@@ -46,6 +53,7 @@ function poseIndex(frameIndex = state.index) {
   return best;
 }
 function fixedView() { return Math.abs(state.yaw) < 1e-8 && Math.abs(state.pitch) < 1e-8 && Math.abs(state.zoom - 1) < 1e-8 && Math.abs(state.panX) < 1e-8 && Math.abs(state.panY) < 1e-8; }
+function useCachedView() { return preview && fixedView() && !state.compareSampling && !state.sharp; }
 
 // Decode incrementally so the first image can appear without waiting for the
 // complete sequence. A missing preview falls back to the original mesh viewer.
@@ -205,7 +213,7 @@ async function draw() {
     }, 250);
   };
   try {
-    if (currentPreview && fixedView()) {
+    if (useCachedView()) {
       showLoading();
       const image = await waitForCurrent(loadPreviewImage(currentPreview, target));
       if (image === cancelled || !stillCurrent()) return;
@@ -218,8 +226,9 @@ async function draw() {
       const frame = await waitForCurrent(loadFrame(index));
       if (frame === cancelled || !stillCurrent()) return;
       await renderer.render({
-        vertices: rotateVertices(frame.vertices), faces, colors: frame.colors, weights, sigmas, overlaps,
-        ...cameraMatrices(), background: [1, 1, 1]
+        vertices: rotateVertices(frame.vertices), faces, colors: frame.colors, weights,
+        sigmas: state.sharp ? 0.001 : sigmas, overlaps: state.sharp ? 0 : overlaps,
+        ...cameraMatrices(), background: [1, 1, 1], sampling: state.sampling
       });
       if (!stillCurrent()) return;
       cachedCanvas.hidden = true;
@@ -244,7 +253,7 @@ async function draw() {
       message.style.cssText = '';
       message.hidden = false;
       message.textContent = error.message || 'The interactive demo could not be loaded.';
-      play.disabled = timeline.disabled = reset.disabled = zoomIn.disabled = zoomOut.disabled = true;
+      play.disabled = timeline.disabled = reset.disabled = zoomIn.disabled = zoomOut.disabled = adaptiveSampling.disabled = sharp.disabled = true;
       console.error(error);
     }
   } finally {
@@ -261,7 +270,7 @@ function tick(now) {
     requestedIndex = (state.index + 1) % frameCount();
     automaticRequest = true;
     // Adjacent 24 fps timeline frames can refer to the same sparse 3D pose.
-    if (!(preview && fixedView()) && poseIndex(requestedIndex) === poseIndex(state.index)) {
+    if (!useCachedView() && poseIndex(requestedIndex) === poseIndex(state.index)) {
       state.index = requestedIndex; timeline.value = String(state.index); automaticRequest = false;
       nextFrameAt = Math.max(nextFrameAt + 1000 / frameRate(), now);
     } else invalidate();
@@ -294,10 +303,34 @@ canvas.addEventListener('keydown', event => {
 play.addEventListener('click', () => {
   state.playing = !state.playing;
   play.textContent = state.playing ? 'Pause' : 'Play';
+  if (state.playing && state.compareSampling) {
+    state.compareSampling = false;
+    invalidate();
+  }
   if (!state.playing && automaticRequest) {
     requestedIndex = state.index; automaticRequest = false; invalidate();
   }
   resetClock();
+});
+adaptiveSampling.addEventListener('change', () => {
+  state.sampling = adaptiveSampling.checked ? 'adaptive' : 'single';
+  try { sessionStorage.setItem('avatar-sampling', state.sampling); } catch {}
+  // Freeze the displayed frame so both modes render exactly the same pose.
+  state.playing = false;
+  play.textContent = 'Play';
+  requestedIndex = state.index;
+  automaticRequest = false;
+  state.compareSampling = true;
+  invalidate();
+});
+sharp.addEventListener('change', () => {
+  state.sharp = sharp.checked;
+  try { sessionStorage.setItem('avatar-sharp', String(state.sharp)); } catch {}
+  // Freeze the displayed frame and compare the same pose.
+  state.playing = false; play.textContent = 'Play';
+  requestedIndex = state.index; automaticRequest = false;
+  state.compareSampling = true;
+  invalidate();
 });
 timeline.addEventListener('input', () => {
   requestedIndex = Number(timeline.value); automaticRequest = false;
@@ -305,7 +338,8 @@ timeline.addEventListener('input', () => {
   resetClock(); invalidate();
 });
 function setZoom(value, clientX, clientY) {
-  const next = Math.max(0.75, Math.min(3, value));
+  if (!Number.isFinite(value)) return;
+  const next = Math.max(0.75, value);
   if (metadata && center && next !== state.zoom) {
     const rect = viewport.getBoundingClientRect();
     const x = clientX ?? rect.left + rect.width / 2;
@@ -317,7 +351,7 @@ function setZoom(value, clientX, clientY) {
   invalidate();
   zoomLevel.value = `${Math.round(state.zoom * 100)}%`;
   zoomOut.disabled = state.zoom <= 0.75;
-  zoomIn.disabled = state.zoom >= 3;
+  zoomIn.disabled = false;
 }
 zoomIn.addEventListener('click', () => setZoom(state.zoom * 1.2));
 zoomOut.addEventListener('click', () => setZoom(state.zoom / 1.2));
@@ -361,6 +395,7 @@ try {
   timeline.disabled = metadata.frames.length < 2;
   play.disabled = metadata.frames.length < 2;
   reset.disabled = false;
+  adaptiveSampling.disabled = sharp.disabled = false;
   setZoom(1);
   state.playing = metadata.frames.length > 1;
   if (!state.playing) play.textContent = 'Play';
